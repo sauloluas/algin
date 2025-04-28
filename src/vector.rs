@@ -61,9 +61,7 @@ impl Vector {
     }
 
     pub fn dot(&self, other: &Self) -> f64 {
-        if self.len() != other.len() {
-            panic!("Incompatible vector lengths");
-        }
+        self.assert_size(&other);
 
         self.iter().zip(other.iter()).map(|(a, b)| a * b).sum()
     }

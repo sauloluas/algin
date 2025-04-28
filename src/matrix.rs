@@ -1,3 +1,4 @@
+use std::fmt;
 use crate::Vector;
 
 #[derive(Debug, Clone)]
@@ -20,6 +21,20 @@ impl Matrix {
         self.data.extend(row.data().into_iter());
 
         self
+    }
+
+    pub fn add_col(mut self, col: &Vector) -> Self {
+        self.assert_col_size(&col);
+
+        let stride = self.stride;
+        for (i, e) in col.iter().enumerate() {
+            self.data.insert((i+1)*stride + i, *e)
+        }
+
+        self.stride = stride + 1;
+
+        self
+
     }
 
     // pub fn from_rows(rows: &[&Vector]) -> Self {
@@ -45,5 +60,28 @@ impl Matrix {
         if self.stride != row.len() {
             panic!("Incompatible row lengths");
         }
+    }
+
+    pub fn assert_col_size(&self, col: &Vector) {
+        if self.col_len() != col.len() {
+            panic!("Incompatible col lengths");
+        }
+    }
+}
+
+impl fmt::Display for Matrix {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let row_len = self.row_len();
+        let col_len = self.col_len();
+        writeln!(f, "")?;
+        writeln!(f, "[")?;
+        for r in 0..col_len {
+            write!(f, "    ")?;
+            for e in 0..row_len {
+                write!(f, "{} ", self.data[e+r*row_len])?;
+            }
+            writeln!(f, "")?;
+        }
+        write!(f, "]")
     }
 }
