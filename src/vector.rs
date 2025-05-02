@@ -152,3 +152,12 @@ where
 
     }
 }
+
+impl<T: Zero + Clone> Vector<T> {
+
+    pub fn zeros(size: usize) -> Self {
+        let data = vec![T::zero(); size];
+
+        Vector { data }
+    }
+}
