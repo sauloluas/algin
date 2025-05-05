@@ -174,4 +174,8 @@ where T:
     }
 }
 
-
+impl<T> Matrix<T> {
+    pub fn data(self) -> Vec<T> {
+        self.data
+    }
+}
