@@ -180,16 +180,18 @@ impl<T> Matrix<T> {
     }
 }
 
-impl<T> Mul<T> for &Matrix<T> 
-where for<'a> &'a T: Mul
+impl<T: Clone> Mul<&T> for &Matrix<T> 
+where 
+    for<'a> &'a T: Mul<&'a T, Output = T>,
 {
     type Output = Matrix<T>; 
 
-    fn mul(self, scalar: T) -> Matrix<T> {
+    fn mul(self, scalar: &T) -> Matrix<T> {
 
-        let dptr = self.data()
-            .clone().iter()
-            .map(|e| e * &scalar)
+        let dptr = vec![scalar; self.size()]
+            .iter()
+            .zip(self.data())
+            .map(|(sc, e)| e * sc)
             .collect();
 
         self.clone().set_data(dptr)
