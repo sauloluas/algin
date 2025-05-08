@@ -1,4 +1,4 @@
-use std::{fmt, ops::{AddAssign, Mul}};
+use std::{fmt, ops::{AddAssign, Div, Mul}};
 use crate::{ops::Dot, SquareMatrix, Vector, Zero};
 
 #[derive(Debug, Clone)]
@@ -177,5 +177,22 @@ where T:
 impl<T> Matrix<T> {
     pub fn data(&self) -> &Vec<T> {
         &self.data
+    }
+}
+
+impl<T> Mul<T> for &Matrix<T> 
+where for<'a> &'a T: Mul
+{
+    type Output = Matrix<T>; 
+
+    fn mul(self, scalar: T) -> Matrix<T> {
+
+        let dptr = self.data()
+            .clone().iter()
+            .map(|e| e * &scalar)
+            .collect();
+
+        self.clone().set_data(dptr)
+
     }
 }
