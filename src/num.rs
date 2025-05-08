@@ -2,6 +2,11 @@ pub trait Zero {
 	fn zero() -> Self;
 }
 
+impl Zero for f32 {
+	fn zero() -> Self { 0.0 }
+}
+
+
 impl Zero for f64 {
 	fn zero() -> Self { 0.0 }
 }
@@ -30,6 +35,10 @@ impl Zero for u64 {
 
 pub trait One {
 	fn one() -> Self;
+}
+
+impl One for f32 {
+	fn one() -> Self { 1.0 }
 }
 
 impl One for f64 {
