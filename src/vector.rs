@@ -161,3 +161,10 @@ impl<T: Zero + Clone> Vector<T> {
         Vector { data }
     }
 }
+
+impl<T> FromIterator<T> for Vector<T> {
+    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+        let data: Vec<T> = iter.into_iter().collect();
+        Vector { data }
+    }
+}
