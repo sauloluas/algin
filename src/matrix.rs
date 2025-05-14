@@ -1,4 +1,4 @@
-use std::{fmt, ops::{AddAssign, Div, Mul}};
+use std::{fmt, ops::{AddAssign, Mul}};
 use crate::{ops::Dot, SquareMatrix, Vector, Zero};
 
 #[derive(Debug, Clone)]
